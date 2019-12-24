@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:PeopleOrNotPeopleDemo.Converters"
+             x:Class="PeopleOrNotPeopleDemo.Views.ResultView"
+             Title="{Binding Title}">
+    
+    <ContentPage.Resources>
+        <converters:BytesToImageConverter x:Key="ToImage" />
+    </ContentPage.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" /> <!-- 2/3 of grid -->
+            <RowDefinition Height="*" /> <!-- 1/3 of grid -->
+        </Grid.RowDefinitions>
+        <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" />
+        <Label Grid.Row="1" HorizontalOptions="Center" FontAttributes="Bold" Margin="10" Text="{Binding Description}" />
+    </Grid>
+    
+</ContentPage>
