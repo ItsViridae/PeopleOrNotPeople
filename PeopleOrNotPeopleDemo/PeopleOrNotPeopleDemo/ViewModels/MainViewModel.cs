@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -16,6 +17,7 @@ namespace PeopleOrNotPeopleDemo.ViewModels
     {
         private IClassifier classifier;
         private byte[] bytes;
+        private int opacity;
 
         public MainViewModel(IClassifier classifier)
         {
@@ -36,26 +38,35 @@ namespace PeopleOrNotPeopleDemo.ViewModels
             classifier.Classify(bytes);
         }
 
-        //private void HandleVideo(MediaFile video)
-        //{
-        //    if (video == null)
-        //    {
-        //        return;
-        //    }
-
-        //    var stream = video.GetStream();
-        //}
-
-        private byte[] ReadFully(Stream input)
+        void HandleOverlayImage(MediaFile overlayImage)
         {
-            byte[] buffer = new byte[16 * 1024];
+            if (overlayImage == null)
+            {
+                return;
+            }
+
+            var stream = overlayImage.GetStream();
+            bytes = ReadFully(stream);
+
+            var image = new OverlayImage()
+            {
+                PhotoBytes = bytes
+            };
+
+            //manually set opacity FIX ME LATER
+            opacity = 75;
+
+            var view = Resolver.Resolve<OverlayImageView>();
+            ((OverlayImageViewModel)view.BindingContext).Initialize(image, opacity);
+
+            Navigation.PushAsync(view);
+        }
+
+        private byte[] ReadFully(Stream inputStream)
+        {
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                int read;
-                while((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    memoryStream.Write(buffer, 0, read);
-                }
+                inputStream.CopyTo(memoryStream);
                 return memoryStream.ToArray();
             }
         }
@@ -91,6 +102,7 @@ namespace PeopleOrNotPeopleDemo.ViewModels
             ((ResultViewModel)view.BindingContext).Initialize(result);
 
             Navigation.PushAsync(view);
+            Thread.Sleep(10000);
         }
 
         public ICommand TakePhoto => new Command(async () =>
@@ -104,19 +116,27 @@ namespace PeopleOrNotPeopleDemo.ViewModels
 
         public ICommand PickPhoto => new Command(async () =>
         {
-            var photo = await CrossMedia.Current.PickPhotoAsync();
+            var photo = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions { });
+
+            if (photo == null) return;
 
             HandlePhoto(photo);
         });
-        //public ICommand TakeVideo => new Command(async () =>
-        //{
-        //    var video = await CrossMedia.Current.TakeVideoAsync(new StoreVideoOptions()
-        //    {
-        //        DefaultCamera = CameraDevice.Front
-        //    });
 
-        //    HandleVideo(video);
-        //});
+        public ICommand PickOverlayImage => new Command(async () =>
+        {
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                //CustomPhotoSize = 100,
+                //RotateImage = true,
+                //SaveMetaData = true
+            });
+
+            if (file == null) return;
+
+            HandleOverlayImage(file);
+        });
+
     }
     
 }

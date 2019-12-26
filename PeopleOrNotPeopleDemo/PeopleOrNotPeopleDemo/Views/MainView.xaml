@@ -10,6 +10,7 @@
       <StackLayout>
             <Button Text="Take Photo" Command="{Binding TakePhoto}" />
             <Button Text="Pick Photo" Command="{Binding PickPhoto}" />
+            <Button Text="Pick Overlay Image" Command="{Binding PickOverlayImage}" />
         </StackLayout>
   </ContentPage.Content>
 </ContentPage>

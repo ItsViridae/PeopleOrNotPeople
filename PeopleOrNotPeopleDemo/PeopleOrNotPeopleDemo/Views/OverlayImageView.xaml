@@ -5,22 +5,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:converters="clr-namespace:PeopleOrNotPeopleDemo.Converters"
-             x:Class="PeopleOrNotPeopleDemo.Views.ResultView"
-             Title="{Binding Title}">
-    
+             x:Class="PeopleOrNotPeopleDemo.Views.OverlayImageView"
+             Title="OverlayImage Title">
+
     <ContentPage.Resources>
         <converters:BytesToImageConverter x:Key="ToImage" />
     </ContentPage.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <!-- before:"2*" 2/3 of grid -->
-            <RowDefinition Height="Auto" />
-            <!--  before:"*" 1/3 of grid -->
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" />
-        <Label Grid.Row="1" HorizontalOptions="Center" FontAttributes="Bold" Margin="10" Text="{Binding Description}"/>
-    </Grid>
-    
+            
+        <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" Opacity="{Binding Opacity}" />
+        <Label Grid.Row="1" HorizontalOptions="Center" FontAttributes="Bold" Margin="10" Text="Label Text for OverlayImage"/>
+    </Grid>     
 </ContentPage>
