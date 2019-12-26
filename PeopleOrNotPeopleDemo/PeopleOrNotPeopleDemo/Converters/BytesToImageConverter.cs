@@ -27,17 +27,17 @@ namespace PeopleOrNotPeopleDemo.Converters
         {
             throw new NotImplementedException();
         }
-        public static ImageSource ByteToImage(byte[] imageData)
-        {
-            BitMapImage biImg = new BitMapImage();
-            MemoryStream ms = new MemoryStream(imageData);
-            biImg.BeginInit();
-            biImg.StreamSource = ms;
-            biImg.EndInit();
+        //public static ImageSource ByteToImage(byte[] imageData)
+        //{
+        //    BitMapImage biImg = new BitMapImage();
+        //    MemoryStream ms = new MemoryStream(imageData);
+        //    biImg.BeginInit();
+        //    biImg.StreamSource = ms;
+        //    biImg.EndInit();
 
-            ImageSource imgSrc = biImg as ImageSource;
+        //    ImageSource imgSrc = biImg as ImageSource;
 
-            return imgSrc;
-        }
+        //    return imgSrc;
+        //}
     }
 }
