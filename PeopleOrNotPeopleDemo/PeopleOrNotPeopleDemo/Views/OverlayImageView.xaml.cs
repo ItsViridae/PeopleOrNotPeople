@@ -18,5 +18,11 @@ namespace PeopleOrNotPeopleDemo.Views
             InitializeComponent();
             BindingContext = viewModel;
         }
+
+        public void OnSliderValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            double value = args.NewValue;
+            displayLabel.Text = String.Format($"The Slider value is {value}");
+        }
     }
 }

@@ -12,12 +12,24 @@
         <converters:BytesToImageConverter x:Key="ToImage" />
     </ContentPage.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" />
+            <Label Grid.Row="1" HorizontalOptions="Center" FontAttributes="Bold" Margin="10" Text="Label Text for OverlayImage"/>
             
-        <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" Opacity="{Binding Opacity}" />
-        <Label Grid.Row="1" HorizontalOptions="Center" FontAttributes="Bold" Margin="10" Text="Label Text for OverlayImage"/>
-    </Grid>     
+        </Grid>
+        
+        <Slider x:Name="slider" Maximum="100" Minimum="0"
+                ValueChanged="OnSliderValueChanged" />
+        
+        <Label x:Name="displayLabel"
+               Text="{Binding Source={x:Reference slider}}" />
+
+    </StackLayout>
 </ContentPage>

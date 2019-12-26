@@ -9,7 +9,7 @@ namespace PeopleOrNotPeopleDemo.ViewModels
     public class OverlayImageViewModel : ViewModel
     {
         public Image OverlayImage { get; set; }
-        public int Opacity { get; set; } = 50;
+        public int Opacity { get; set; }
 
         private byte[] photoBytes;
         public byte[] PhotoBytes
@@ -23,6 +23,7 @@ namespace PeopleOrNotPeopleDemo.ViewModels
             PhotoBytes = image.PhotoBytes;
             Opacity = opacityValue;
         }
+        
     }
     
 }
