@@ -20,16 +20,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" />
+            <Image Source="{Binding PhotoBytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" /><!--Opacity="{Binding Source={x:Reference slider}}"-->
             <Label Grid.Row="1" HorizontalOptions="Center" FontAttributes="Bold" Margin="10" Text="Label Text for OverlayImage"/>
             
         </Grid>
-        
+
         <Slider x:Name="slider" Maximum="100" Minimum="0"
                 ValueChanged="OnSliderValueChanged" />
-        
         <Label x:Name="displayLabel"
-               Text="{Binding Source={x:Reference slider}}" />
+               Text="" />
+        
 
     </StackLayout>
 </ContentPage>
